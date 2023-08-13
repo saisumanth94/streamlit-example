@@ -22,7 +22,7 @@ df = pd.read_csv(StringIO(content))
 # df = pd.read_csv('usa_500000.csv')
 
 # Convert string data to dictionaries
-df['address'] = df['address'].apply(lambda x: ast.literal_eval(x) if isinstance(x, str) else {})
+# df['address'] = df['address'].apply(lambda x: ast.literal_eval(x) if isinstance(x, str) else {})
 
 # Function to check if value is present and return 1 or 0
 def presence_to_int(value):
