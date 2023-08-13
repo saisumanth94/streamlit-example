@@ -36,15 +36,22 @@ df['confidence_decile'] = pd.cut(df['confidence'], bins=bins, labels=labels, rig
 grouped = df.groupby('confidence_decile')['confidence'].agg(['min', 'max'])
 
 def main():
-    st.title("Pivot DataFrame in Streamlit")
+    st.title("Pivot-Like Tool in Streamlit")
 
-    # Display the original DataFrame
-    st.header("Original DataFrame")
-    st.dataframe(df)
+    # Show original data
+    st.subheader("Original Data")
+    st.write(df)
 
-    # Display the grouped DataFrame
-    st.header("Grouped DataFrame (Min-Max Confidence)")
-    st.dataframe(grouped)
+    # Allow users to select columns for pivot
+    selected_columns = st.multiselect("Select Columns for Pivot:", df.columns)
+
+    if selected_columns:
+        # Pivot the data based on selected columns
+        pivot_df = df.pivot_table(index=selected_columns, aggfunc='count')
+
+        # Show pivot table
+        st.subheader("Pivot Table")
+        st.write(pivot_df)
 
 if __name__ == "__main__":
     main()
