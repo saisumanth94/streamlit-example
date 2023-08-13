@@ -34,8 +34,6 @@ bins = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6,0.7,0.8,0.9,1]  # Define custom bins bas
 labels = [1, 2, 3, 4, 5, 6,7,8,9,10]  # Deciles corresponding to the bins
 df['confidence_decile'] = pd.cut(df['confidence'], bins=bins, labels=labels, right=False)
 
-# Group by 'confidence_decile' and calculate min and max confidence
-grouped = df.groupby('confidence_decile')['confidence'].agg(['min', 'max'])
 
 def main():
     st.title("Dynamic Pivot-Like Tool in Streamlit")
@@ -48,10 +46,9 @@ def main():
     if selected_index == "None":
         selected_index = None
     
-    if selected_columns == "None":
-        selected_columns = None
 
-    if selected_columns is not None and selected_index is not None and aggregation_function:
+
+    if selected_columns  and selected_index is not None and aggregation_function:
         # Pivot the data based on selected columns, rows, and aggregation function
         pivot_df = df.pivot_table(index=selected_index, columns=selected_columns, values='confidence', aggfunc=aggregation_function)
 
