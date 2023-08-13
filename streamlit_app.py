@@ -43,7 +43,13 @@ def main():
     # Allow users to select columns, rows, and aggregation function
     selected_columns = st.multiselect("Select Columns:", df.columns)
     selected_index = st.multiselect("Select Rows:", df.columns)
-    aggregation_function = st.selectbox("Select Aggregation Function:", ['mean', 'sum', 'min', 'max'])
+    aggregation_function = st.selectbox("Select Aggregation Function:", ['mean', 'sum', 'min', 'max','count'])
+
+    if selected_index == "None":
+        selected_index = None
+
+    if selected_columns == "None":
+    selected_columns = None
 
     if selected_columns and selected_index and aggregation_function:
         # Pivot the data based on selected columns, rows, and aggregation function
