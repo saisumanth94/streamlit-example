@@ -42,16 +42,21 @@ def main():
     st.subheader("Original Data")
     st.write(df)
 
-    # Allow users to select columns for pivot
-    # Allow users to select index, columns, and values for pivot
-    selected_index = st.selectbox("Select Index Column:", df.columns)
+    # Allow users to select columns, rows, and values for pivot
     selected_columns = st.multiselect("Select Columns:", df.columns)
+    selected_index = st.selectbox("Select Rows:", df.columns)
     selected_values = st.selectbox("Select Values Column:", df.columns)
 
-    if selected_index and selected_columns and selected_values:
-        # Pivot the data based on selected index, columns, and values
+    if selected_columns and selected_index and selected_values:
+        # Pivot the data based on selected columns, rows, and values
         pivot_df = df.pivot_table(index=selected_index, columns=selected_columns, values=selected_values)
 
+        # Show pivot table
+        st.subheader("Pivot Table")
+        st.write(pivot_df)
+
+if __name__ == "__main__":
+    main()
         # Show pivot table
         st.subheader("Pivot Table")
         st.write(pivot_df)
