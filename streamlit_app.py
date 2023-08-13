@@ -43,11 +43,14 @@ def main():
     st.write(df)
 
     # Allow users to select columns for pivot
-    selected_columns = st.multiselect("Select Columns for Pivot:", df.columns)
+    # Allow users to select index, columns, and values for pivot
+    selected_index = st.selectbox("Select Index Column:", df.columns)
+    selected_columns = st.multiselect("Select Columns:", df.columns)
+    selected_values = st.selectbox("Select Values Column:", df.columns)
 
-    if selected_columns:
-        # Pivot the data based on selected columns
-        pivot_df = df.pivot_table(index=selected_columns, aggfunc='count')
+    if selected_index and selected_columns and selected_values:
+        # Pivot the data based on selected index, columns, and values
+        pivot_df = df.pivot_table(index=selected_index, columns=selected_columns, values=selected_values)
 
         # Show pivot table
         st.subheader("Pivot Table")
