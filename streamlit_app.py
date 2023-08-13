@@ -1,6 +1,8 @@
 import streamlit as st
 import pandas as pd
 import ast  # For literal string to dictionary conversion
+from pandastable import Table, TableModel
+
 
 # Sample data
 
@@ -36,30 +38,11 @@ df['confidence_decile'] = pd.cut(df['confidence'], bins=bins, labels=labels, rig
 grouped = df.groupby('confidence_decile')['confidence'].agg(['min', 'max'])
 
 def main():
-    st.title("Pivot-Like Tool in Streamlit")
+    st.title("Dynamic Pivot Table Tool")
 
-    # Show original data
-    st.subheader("Original Data")
-    st.write(df)
-
-    # Allow users to select columns, rows, and values for pivot
-    selected_columns = st.multiselect("Select Columns:", df.columns)
-    selected_index = st.selectbox("Select Rows:", df.columns)
-    selected_values = st.selectbox("Select Values Column:", df.columns)
-
-    if selected_columns and selected_index and selected_values:
-        # Pivot the data based on selected columns, rows, and values
-        pivot_df = df.pivot_table(index=selected_index, columns=selected_columns, values=selected_values)
-
-        # Show pivot table
-        st.subheader("Pivot Table")
-        st.write(pivot_df)
-
-if __name__ == "__main__":
-    main()
-        # Show pivot table
-        st.subheader("Pivot Table")
-        st.write(pivot_df)
+    # PandasGUI table
+    table = Table(df, showtoolbar=True, showstatusbar=True)
+    table.show()
 
 if __name__ == "__main__":
     main()
