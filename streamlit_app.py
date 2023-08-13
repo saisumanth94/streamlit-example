@@ -37,18 +37,21 @@ df['confidence_decile'] = pd.cut(df['confidence'], bins=bins, labels=labels, rig
 # Group by 'confidence_decile' and calculate min and max confidence
 grouped = df.groupby('confidence_decile')['confidence'].agg(['min', 'max'])
 
-# Allow users to select columns, rows, and aggregation function
-selected_columns = st.multiselect("Select Columns:", df.columns)
-selected_index = st.selectbox("Select Rows:", df.columns)
-aggregation_function = st.selectbox("Select Aggregation Function:", ['mean', 'sum', 'min', 'max'])
+def main():
+    st.title("Dynamic Pivot-Like Tool in Streamlit")
 
-if selected_columns and selected_index and aggregation_function:
-    # Pivot the data based on selected columns, rows, and aggregation function
-    pivot_df = df.pivot_table(index=selected_index, columns=selected_columns, values='confidence', aggfunc=aggregation_function)
+    # Allow users to select columns, rows, and aggregation function
+    selected_columns = st.selectbox("Select Columns:", df.columns)
+    selected_index = st.selectbox("Select Rows:", df.columns)
+    aggregation_function = st.selectbox("Select Aggregation Function:", ['mean', 'sum', 'min', 'max'])
 
-    # Show pivot table
-    st.subheader("Pivot Table")
-    st.write(pivot_df)
+    if selected_columns and selected_index and aggregation_function:
+        # Pivot the data based on selected columns, rows, and aggregation function
+        pivot_df = df.pivot_table(index=selected_index, columns=selected_columns, values='confidence', aggfunc=aggregation_function)
+
+        # Show pivot table
+        st.subheader("Pivot Table")
+        st.write(pivot_df)
 
 if __name__ == "__main__":
-main()
+    main()
