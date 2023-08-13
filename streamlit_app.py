@@ -41,7 +41,7 @@ def main():
     st.title("Dynamic Pivot-Like Tool in Streamlit")
 
     # Allow users to select columns, rows, and aggregation function
-    selected_columns = st.selectbox("Select Columns:", df.columns)
+    selected_columns = st.multiselect("Select Columns:", df.columns)
     selected_index = st.selectbox("Select Rows:", df.columns)
     aggregation_function = st.selectbox("Select Aggregation Function:", ['mean', 'sum', 'min', 'max'])
 
