@@ -47,9 +47,9 @@ def main():
 
     if selected_index == "None":
         selected_index = None
-
+    
     if selected_columns == "None":
-    selected_columns = None
+        selected_columns = None
 
     if selected_columns and selected_index and aggregation_function:
         # Pivot the data based on selected columns, rows, and aggregation function
