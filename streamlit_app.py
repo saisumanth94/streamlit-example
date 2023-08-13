@@ -1,14 +1,25 @@
 import streamlit as st
 import pandas as pd
+import requests
+from io import StringIO
 import ast  # For literal string to dictionary conversion
 
 
 
 # Sample data
 
+file_url = 'https://drive.google.com/file/d/1AwUcdevA3GffeHKjbXKN2Ro2lRJf6oLm/view?usp=sharing'
+
+# Download the file using requests
+response = requests.get(file_url)
+content = response.text
+
+# Create a DataFrame from the CSV data
+df = pd.read_csv(StringIO(content))
+
 
 # Create a DataFrame
-df = pd.read_csv('usa_500000.csv')
+# df = pd.read_csv('usa_500000.csv')
 
 # Convert string data to dictionaries
 df['address'] = df['address'].apply(lambda x: ast.literal_eval(x) if isinstance(x, str) else {})
