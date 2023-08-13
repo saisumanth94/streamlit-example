@@ -51,7 +51,7 @@ def main():
     if selected_columns == "None":
         selected_columns = None
 
-    if selected_columns and selected_index and aggregation_function:
+    if selected_columns is not None an selected_index is not None and aggregation_function:
         # Pivot the data based on selected columns, rows, and aggregation function
         pivot_df = df.pivot_table(index=selected_index, columns=selected_columns, values='confidence', aggfunc=aggregation_function)
 
