@@ -6,7 +6,7 @@ import ast  # For literal string to dictionary conversion
 
 
 # Create a DataFrame
-df = df
+df = pd.read_csv('usa_500000.csv')
 
 # Convert string data to dictionaries
 df['address'] = df['address'].apply(lambda x: ast.literal_eval(x) if isinstance(x, str) else {})
