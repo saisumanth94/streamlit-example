@@ -42,7 +42,7 @@ def main():
 
     # Allow users to select columns, rows, and aggregation function
     selected_columns = st.multiselect("Select Columns:", df.columns)
-    selected_index = st.selectbox("Select Rows:", df.columns)
+    selected_index = st.multiselect("Select Rows:", df.columns)
     aggregation_function = st.selectbox("Select Aggregation Function:", ['mean', 'sum', 'min', 'max'])
 
     if selected_columns and selected_index and aggregation_function:
