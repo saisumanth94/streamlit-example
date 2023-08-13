@@ -1,38 +1,50 @@
-from collections import namedtuple
-import altair as alt
-import math
+aimport streamlit as st
 import pandas as pd
-import streamlit as st
+import ast  # For literal string to dictionary conversion
 
-"""
-# Welcome to Streamlit!
-
-Edit `/streamlit_app.py` to customize this app to your heart's desire :heart:
-
-If you have any questions, checkout our [documentation](https://docs.streamlit.io) and [community
-forums](https://discuss.streamlit.io).
-
-In the meantime, below is an example of what you can do with just a few lines of code:
-"""
+# Sample data
 
 
-with st.echo(code_location='below'):
-    total_points = st.slider("Number of points in spiral", 1, 5000, 2000)
-    num_turns = st.slider("Number of turns in spiral", 1, 100, 9)
+# Create a DataFrame
+df = df
 
-    Point = namedtuple('Point', 'x y')
-    data = []
+# Convert string data to dictionaries
+df['address'] = df['address'].apply(lambda x: ast.literal_eval(x) if isinstance(x, str) else {})
 
-    points_per_turn = total_points / num_turns
+# Function to check if value is present and return 1 or 0
+def presence_to_int(value):
+    if pd.isna(value):
+        return 0
+    return 1
 
-    for curr_point_num in range(total_points):
-        curr_turn, i = divmod(curr_point_num, points_per_turn)
-        angle = (curr_turn + 1) * 2 * math.pi * i / points_per_turn
-        radius = curr_point_num / total_points
-        x = radius * math.cos(angle)
-        y = radius * math.sin(angle)
-        data.append(Point(x, y))
+# Create new columns for presence of email, phone, social, and website
+df['has_email'] = df['email'].apply(presence_to_int)
+df['has_phone'] = df['phone'].apply(presence_to_int)
+df['has_social'] = df['social'].apply(presence_to_int)
+df['has_website'] = df['website'].apply(presence_to_int)
 
-    st.altair_chart(alt.Chart(pd.DataFrame(data), height=500, width=500)
-        .mark_circle(color='#0068c9', opacity=0.5)
-        .encode(x='x:Q', y='y:Q'))
+# Create new columns for presence of brand_name and brand_wikidata
+df['has_brand_name'] = df['brand_name'].apply(presence_to_int)
+df['has_brand_wikidata'] = df['brand_wikidata'].apply(presence_to_int)
+
+# Create custom deciles for 'confidence' column
+bins = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6,0.7,0.8,0.9,1]  # Define custom bins based on your requirements
+labels = [1, 2, 3, 4, 5, 6,7,8,9,10]  # Deciles corresponding to the bins
+df['confidence_decile'] = pd.cut(df['confidence'], bins=bins, labels=labels, right=False)
+
+# Group by 'confidence_decile' and calculate min and max confidence
+grouped = df.groupby('confidence_decile')['confidence'].agg(['min', 'max'])
+
+def main():
+    st.title("Pivot DataFrame in Streamlit")
+
+    # Display the original DataFrame
+    st.header("Original DataFrame")
+    st.dataframe(df)
+
+    # Display the grouped DataFrame
+    st.header("Grouped DataFrame (Min-Max Confidence)")
+    st.dataframe(grouped)
+
+if __name__ == "__main__":
+    main()
