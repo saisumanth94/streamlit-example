@@ -8,7 +8,7 @@ import ast  # For literal string to dictionary conversion
 chunk_size = 1000
 
 # Load CSV data in chunks using pandas
-chunk_generator = pd.read_csv("https://www.dropbox.com/scl/fi/95u61nwabeg4os09rllyq/Overture1.csv?rlkey=pvfhtomhosz67ayzqcqy7iwyb&dl=1", chunksize=chunk_size,delimiter=';', error_bad_lines=False)
+chunk_generator = pd.read_csv("https://www.dropbox.com/scl/fi/95u61nwabeg4os09rllyq/Overture1.csv?rlkey=pvfhtomhosz67ayzqcqy7iwyb&dl=1", chunksize=chunk_size,delimiter=';',  on_bad_lines='skip')
 
 # Initialize an empty list to store chunks
 chunks = []
