@@ -5,11 +5,26 @@ import ast  # For literal string to dictionary conversion
 
 
 # Sample data
+chunk_size = 1000
+
+# Load CSV data in chunks using pandas
+chunk_generator = pd.read_csv("https://www.dropbox.com/scl/fi/95u61nwabeg4os09rllyq/Overture1.csv?rlkey=pvfhtomhosz67ayzqcqy7iwyb&dl=1, chunksize=chunk_size)
+
+# Initialize an empty list to store chunks
+chunks = []
+
+for chunk in chunk_generator:
+    # Process each chunk (e.g., analyze, transform, etc.)
+    chunks.append(chunk)
+
+# Concatenate all chunks into a final dataset
+df = pd.concat(chunks, ignore_index=True)
+
 
 
 
 # Create a DataFrame
-df = pd.read_csv("https://www.dropbox.com/scl/fi/95u61nwabeg4os09rllyq/Overture1.csv?rlkey=pvfhtomhosz67ayzqcqy7iwyb&dl=1,nrows=1000")
+# df = pd.read_csv("https://www.dropbox.com/scl/fi/95u61nwabeg4os09rllyq/Overture1.csv?rlkey=pvfhtomhosz67ayzqcqy7iwyb&dl=1,nrows=1000")
 
 # Convert string data to dictionaries
 # df['address'] = df['address'].apply(lambda x: ast.literal_eval(x) if isinstance(x, str) else {})
