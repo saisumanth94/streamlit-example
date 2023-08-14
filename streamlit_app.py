@@ -11,7 +11,7 @@ import ast  # For literal string to dictionary conversion
 
 
 # Create a DataFrame
-df = pd.read_csv("https://www.dropbox.com/scl/fi/95u61nwabeg4os09rllyq/Overture1.csv?rlkey=pvfhtomhosz67ayzqcqy7iwyb&dl=1, skiprows=5")
+df = pd.read_csv("https://www.dropbox.com/scl/fi/95u61nwabeg4os09rllyq/Overture1.csv?rlkey=pvfhtomhosz67ayzqcqy7iwyb&dl=1, on_bad_lines='skip' ")
 
 # Convert string data to dictionaries
 # df['address'] = df['address'].apply(lambda x: ast.literal_eval(x) if isinstance(x, str) else {})
