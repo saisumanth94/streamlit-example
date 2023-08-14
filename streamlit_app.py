@@ -6,9 +6,11 @@ import ast  # For literal string to dictionary conversion
 
 # Sample data
 chunk_size = 1000
+def skip_function(row):
+    return row[0] == ''
 
 # Load CSV data in chunks using pandas
-chunk_generator = pd.read_csv("https://www.dropbox.com/scl/fi/95u61nwabeg4os09rllyq/Overture1.csv?rlkey=pvfhtomhosz67ayzqcqy7iwyb&dl=1", chunksize=chunk_size)
+chunk_generator = pd.read_csv("https://www.dropbox.com/scl/fi/95u61nwabeg4os09rllyq/Overture1.csv?rlkey=pvfhtomhosz67ayzqcqy7iwyb&dl=1", chunksize=chunk_size,skiprows=skip_function)
 
 # Initialize an empty list to store chunks
 chunks = []
