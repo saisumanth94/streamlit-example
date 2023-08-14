@@ -6,21 +6,9 @@ import ast  # For literal string to dictionary conversion
 
 # Sample data
 chunk_size = 1000
-def skip_function(row):
-    # Identify data quality issues and return True for rows to skip
-    if len(row) != expected_number_of_columns:
-        return True  # Skip rows with unexpected number of columns
-    if any(pd.isnull(row)):
-        return True  # Skip rows with missing values
-    if any(isinstance(value, str) and value.startswith('Error') for value in row):
-        return True  # Skip rows with values starting with 'Error'
-    return False
-
-# Define the expected number of columns in your CSV data
-expected_number_of_columns = 5
 
 # Load CSV data in chunks using pandas
-chunk_generator = pd.read_csv("https://www.dropbox.com/scl/fi/95u61nwabeg4os09rllyq/Overture1.csv?rlkey=pvfhtomhosz67ayzqcqy7iwyb&dl=1", chunksize=chunk_size,skiprows=skip_function)
+chunk_generator = pd.read_csv("https://www.dropbox.com/scl/fi/95u61nwabeg4os09rllyq/Overture1.csv?rlkey=pvfhtomhosz67ayzqcqy7iwyb&dl=1", chunksize=chunk_size,delimiter=';', error_bad_lines=False)
 
 # Initialize an empty list to store chunks
 chunks = []
